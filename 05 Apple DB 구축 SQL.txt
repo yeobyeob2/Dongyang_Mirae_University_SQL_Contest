@@ -1,0 +1,74 @@
+-- 테이블 베이스 생성
+
+CREATE DATABASE apple_db;
+
+-- 테이블 베이스 선택
+
+USE apple_db;
+
+-- 테이블 생성
+
+-- product(제품) 테이블 생성
+CREATE TABLE product
+(product_number	       INT	        NOT NULL
+,product_name	       VARCHAR(8)	NOT NULL
+,system_name           VARCHAR(8)	
+,latest_version           VARCHAR(10)
+,first_release_date    DATE	
+,bottom_price          INT	
+,top_price             INT	
+,PRIMARY KEY(product_number)
+);
+
+-- applesilicon(애플실리콘) 테이블 생성
+CREATE TABLE applesilicon	
+(applesilicon_number   INT             NOT NULL
+,applesilicon_name     VARCHAR(15)     NOT NULL
+,series	               CHAR(2)	       NOT NULL
+,product_number	       INT             NOT NULL
+,CPU                   VARCHAR(85)
+,GPU                   VARCHAR(40)
+,NPU                   VARCHAR(40)
+,memory	               VARCHAR(55)
+,PRIMARY KEY(applesilicon_number)
+,FOREIGN KEY(product_number) REFERENCES product(product_number)
+);
+
+-- model(모델) 테이블 생성
+CREATE TABLE model
+(model_number          INT             NOT NULL
+,model_name            VARCHAR(44)     NOT NULL
+,product_number	       INT             NOT NULL
+,minimum_capacity      VARCHAR(6)
+,minimum_price         INT	
+,maximum_capacity      VARCHAR(6)	
+,maximum_price         INT	
+,first_release_date    DATE	
+,last_release_year     INT
+,latest_version_compatibility CHAR(1)	
+,PRIMARY KEY(model_number)
+,FOREIGN KEY(product_number) REFERENCES product(product_number)
+);
+
+-- 액세서리(accessories) 테이블 생성
+CREATE TABLE accessories
+(accessories_number    INT             NOT NULL
+,accessories_name      VARCHAR(65)     NOT NULL
+,product_number	       INT             NOT NULL
+,price                 INT	
+,kind                  VARCHAR(6)
+,PRIMARY KEY(accessories_number)
+,FOREIGN KEY(product_number) REFERENCES product(product_number)
+);
+
+-- applecareplus(애플케어플러스) 테이블 생성
+CREATE TABLE applecareplus
+(applecareplus_number  INT             NOT NULL
+,applecareplus_name    VARCHAR(50)     NOT NULL
+,product_number        INT             NOT NULL
+,warranty_period       CHAR(2)	
+,subscribable_model    VARCHAR(25)	
+,price	               INT
+,PRIMARY KEY(applecareplus_number)
+,FOREIGN KEY(product_number) REFERENCES product(product_number)
+);
